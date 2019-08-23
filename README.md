@@ -1,2 +1,192 @@
 # utl-how-many-triangles-in-the-polygon-r-igraph-AI
 How many triangles in the polygon r igraph 
+
+    How many triangles in the polygon r igraph                                                                                 
+                                                                                                                               
+    github                                                                                                                     
+    https://tinyurl.com/y658t4b6                                                                                               
+    https://github.com/rogerjdeangelis/utl-how-many-triangles-in-the-polygon-r-igraph-AI                                       
+                                                                                                                               
+    StackOverflow                                                                                                              
+    https://tinyurl.com/y6s75anm                                                                                               
+    https://stackoverflow.com/questions/57622506/how-to-return-only-one-triangle-from-the-set-of-isomorphic-triangles          
+                                                                                                                               
+    Ben Nutzer profile                                                                                                         
+    https://stackoverflow.com/users/8996032/ben-nutzer                                                                         
+                                                                                                                               
+                                                                                                                               
+    *_                   _                                                                                                     
+    (_)_ __  _ __  _   _| |_                                                                                                   
+    | | '_ \| '_ \| | | | __|                                                                                                  
+    | | | | | |_) | |_| | |_                                                                                                   
+    |_|_| |_| .__/ \__,_|\__|                                                                                                  
+            |_|                                                                                                                
+    ;                                                                                                                          
+                                                                                                                               
+    %let square=A--B, B--C, C--D;                                                                                              
+                                                                                                                               
+    *           _                                                                                                              
+     _ __ _   _| | ___  ___                                                                                                    
+    | '__| | | | |/ _ \/ __|                                                                                                   
+    | |  | |_| | |  __/\__ \                                                                                                   
+    |_|   \__,_|_|\___||___/                                                                                                   
+                                                                                                                               
+    ;                                                                                                                          
+    data have;                                                                                                                 
+     input x y sym $;                                                                                                          
+    cards4;                                                                                                                    
+    0 0 A                                                                                                                      
+    0 1 B                                                                                                                      
+    1 0 C                                                                                                                      
+    1 1 D                                                                                                                      
+    ;;;;                                                                                                                       
+    run;quit;                                                                                                                  
+                                                                                                                               
+    options ls=64 ps=20;                                                                                                       
+    proc plot data=have(rename=y=y1234567890123456789012345678900);                                                            
+    plot y1234567890123456789012345678900*x= '*' $ sym;                                                                        
+    run;quit;                                                                                                                  
+                                                                                                                               
+      Plot of Y*X.                                                                                                             
+                                                                                                                               
+     Y |                                                                                                                       
+       |              RULE                                                                                                     
+     1 +  A------B    Polygon has two triangles                                                                                
+       |  |     /|                                                                                                             
+       |  | 1  / |                                                                                                             
+       |  |   /  |                                                                                                             
+       |  |  /   |                                                                                                             
+       |  | /  2 |                                                                                                             
+     0 +  C------D                                                                                                             
+       |                                                                                                                       
+       ---+--------                                                                                                            
+          0      1                                                                                                             
+             X                                                                                                                 
+                                                                                                                               
+    *            _               _                                                                                             
+      ___  _   _| |_ _ __  _   _| |_                                                                                           
+     / _ \| | | | __| '_ \| | | | __|                                                                                          
+    | (_) | |_| | |_| |_) | |_| | |_                                                                                           
+     \___/ \__,_|\__| .__/ \__,_|\__|                                                                                          
+                    |_|                                                                                                        
+    ;                                                                                                                          
+                                                                                                                               
+    * Macro variable triangles from R;                                                                                         
+                                                                                                                               
+    %put Number of &=triangles;                                                                                                
+                                                                                                                               
+    Number of TRIANGLES=2                                                                                                      
+                                                                                                                               
+    *                                                                                                                          
+     _ __  _ __ ___   ___ ___  ___ ___                                                                                         
+    | '_ \| '__/ _ \ / __/ _ \/ __/ __|                                                                                        
+    | |_) | | | (_) | (_|  __/\__ \__ \                                                                                        
+    | .__/|_|  \___/ \___\___||___/___/                                                                                        
+    |_|                                                                                                                        
+    ;                                                                                                                          
+                                                                                                                               
+                                                                                                                               
+    %symdel square triangles / nowarn;                                                                                         
+                                                                                                                               
+    %let square=A--B, B--C, C--D;                                                                                              
+                                                                                                                               
+    %utl_submit_r64("                                                                                                          
+    library(igraph);                                                                                                           
+    g          <- graph_from_literal( &square );                                                                               
+    triangle   <- graph_from_literal( Y--X, X--Z);                                                                             
+    ntriangles <- 0;                                                                                                           
+    iso <- subgraph_isomorphisms(triangle, g);                                                                                 
+    motifs <- lapply(iso, function (x) { get.edgelist(induced_subgraph(g, x)) });                                              
+    ntriangles <- length(unique(motifs));                                                                                      
+    triangles<-paste(ntriangles);                                                                                              
+    writeClipboard(triangles);                                                                                                 
+    ",returnVar=triangles );                                                                                                   
+                                                                                                                               
+    %put Number of triangles &=triangles;                                                                                      
+                                                                                                                               
+    *_                                                                                                                         
+    | | ___   __ _                                                                                                             
+    | |/ _ \ / _` |                                                                                                            
+    | | (_) | (_| |                                                                                                            
+    |_|\___/ \__, |                                                                                                            
+             |___/                                                                                                             
+    ;                                                                                                                          
+                                                                                                                               
+    > library(igraph);g          <- graph_from_literal( A--B, B--C,                                                            
+    C--D );triangle   <- graph_from_literal( Y--X, X--Z);ntriangles                                                            
+    <- 0;iso <- subgraph_isomorphisms(triangle, g);motifs <- lapply(                                                           
+    iso, function (x) { get.edgelist(induced_subgraph(g, x)) });ntri                                                           
+    angles <- length(unique(motifs));triangles<-paste(ntriangles);wr                                                           
+    iteClipboard(triangles);                                                                                                   
+    >                                                                                                                          
+    NOTE: 7 lines were written to file PRINT.                                                                                  
+    Stderr output:                                                                                                             
+    
+                                                                                                                          
+    Attaching package: 'igraph                                                                                                 
+    
+ttaching package: 'igraph                                                                                                 
+    The following objects are masked from 'package:stats'                                                                      
+    
+he following objects are masked from 'package:stats'                                                                      
+        decompose, spectru                                                                                                     
+    
+   decompose, spectru                                                                                                     
+    The following object is masked from 'package:base'                                                                         
+    
+he following object is masked from 'package:base'                                                                         
+        unio                                                                                                                   
+    
+   unio                                                                                                                   
+    Warning message                                                                                                            
+    package 'igraph' was built under R version 3.5.3                                                                           
+    NOTE: 2 records were read from the infile RUT.                                                                             
+          The minimum record length was 2.                                                                                     
+          The maximum record length was 344.                                                                                   
+    NOTE: DATA statement used (Total process time):                                                                            
+          real time           0.60 seconds                                                                                     
+          user cpu time       0.00 seconds                                                                                     
+          system cpu time     0.12 seconds                                                                                     
+          memory              342.25k                                                                                          
+          OS Memory           21748.00k                                                                                        
+          Timestamp           08/23/2019 06:38:08 AM                                                                           
+          Step Count                        368  Switch Count  0                                                               
+                                                                                                                               
+                                                                                                                               
+    MPRINT(UTL_SUBMIT_R64):   filename rut clear;                                                                              
+    NOTE: Fileref RUT has been deassigned.                                                                                     
+    MPRINT(UTL_SUBMIT_R64):   filename r_pgm clear;                                                                            
+    NOTE: Fileref R_PGM has been deassigned.                                                                                   
+    MPRINT(UTL_SUBMIT_R64):   * use the clipboard to create macro                                                              
+    variable;                                                                                                                  
+    SYMBOLGEN:  Macro variable RETURNVAR resolves to triangles                                                                 
+    MLOGIC(UTL_SUBMIT_R64):  %IF condition                                                                                     
+          %upcase(%substr(&returnVar.,1,1)) ne N is TRUE                                                                       
+    MPRINT(UTL_SUBMIT_R64):   filename clp clipbrd ;                                                                           
+    MPRINT(UTL_SUBMIT_R64):   data _null_;                                                                                     
+    MPRINT(UTL_SUBMIT_R64):   length txt $200;                                                                                 
+    MPRINT(UTL_SUBMIT_R64):   infile clp;                                                                                      
+    MPRINT(UTL_SUBMIT_R64):   input;                                                                                           
+    SYMBOLGEN:  Macro variable RETURNVAR resolves to triangles                                                                 
+    MPRINT(UTL_SUBMIT_R64):   putlog "macro variable triangles = "                                                             
+    _infile_;                                                                                                                  
+    SYMBOLGEN:  Macro variable RETURNVAR resolves to triangles                                                                 
+    MPRINT(UTL_SUBMIT_R64):   call                                                                                             
+    symputx("triangles",_infile_,"G");                                                                                         
+    MPRINT(UTL_SUBMIT_R64):   run;                                                                                             
+                                                                                                                               
+    NOTE: Variable TXT is uninitialized.                                                                                       
+    NOTE: The infile CLP is:                                                                                                   
+          (no system-specific pathname available),                                                                             
+          (no system-specific file attributes available)                                                                       
+                                                                                                                               
+    macro variable triangles = 2                                                                                               
+    NOTE: 1 record was read from the infile CLP.                                                                               
+          The minimum record length was 1.                                                                                     
+          The maximum record length was 1.                                                                                     
+    NOTE: DATA statement used (Total process time):                                                                            
+          real time           0.05 seconds                                                                                     
+          user cpu time       0.00 seconds                                                                                     
+          system cpu time     0.06 seconds                                                                                     
+                                                                                                                               
+                                                                                                                               
